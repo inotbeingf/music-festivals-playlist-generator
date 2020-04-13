@@ -14,7 +14,7 @@ const SpotifyWebApi = require("spotify-web-api-node");
  * @property `artists: array<string>` - Artists playing at choosen festival
  * @property `festival: string` -  Music festival name
  * @property `accessToken: string` -  Users' Spotify Access Token
- * @returns A promise that if successful resolves to an array with the playlist URL at index 0 and subsequent indexes have object responses from Spotify "Add Tracks to a Playlist" endpoint
+ * @returns A promise that if successful resolves to an array with the playlist ID at index 0 and subsequent indexes have object responses from Spotify "Add Tracks to a Playlist" endpoint
  */
 
 async function createPlaylist({
@@ -97,7 +97,7 @@ async function createPlaylist({
       });
 
     let playlistCreated = [];
-    playlistCreated.push(playlist.external_urls.spotify);
+    playlistCreated.push(playlist.id);
     for await (let chuncks of maxNumberURIs) {
       playlistCreated.push(
         spotifyApi.addTracksToPlaylist(playlist.id, chuncks)
