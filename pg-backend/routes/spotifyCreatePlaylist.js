@@ -12,6 +12,7 @@ const router = new KoaRouter();
 
 router.get("/createplaylist", async ctx => {
   let { userInput, accessToken, tracksPerArtist } = ctx.request.query;
+  ctx.body = "blank";
   let middlemanResults = (await middleman.getFestival(userInput))[0];
   let {
     name: festivalName,
@@ -34,7 +35,7 @@ router.get("/createplaylist", async ctx => {
   let playlistURL = await playlist[0];
   if (lastBatch.body.snapshot_id) {
     // Do something with the newly created playlist
-    ctx.response.body = playlistURL;
+    ctx.redirect(playlistURL);
   } else {
     console.error("That's some bad hat Harry!");
   }
