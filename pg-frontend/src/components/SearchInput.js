@@ -11,7 +11,7 @@ const SearchInput = () => {
     setGlobalState({ ...globalState, loading: "true" });
     let query = userInput.replace(/ /g, "%20");
     fetch(
-      `http://localhost:3000/createplaylist?userInput=${query}&accessToken=${globalState.token}&tracksPerArtist=1`
+      `${process.env.BACKEND_URL}/createplaylist?userInput=${query}&accessToken=${globalState.token}&tracksPerArtist=1`
     )
       .then((response) => {
         return response.text();
