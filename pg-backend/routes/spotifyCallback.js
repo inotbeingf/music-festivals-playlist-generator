@@ -37,8 +37,6 @@ router.get("/callback", async ctx => {
     ).data;
 
     let { access_token, refresh_token } = tokens;
-    // Do something with the tokens
-    console.log(access_token);
     let uri = process.env.FRONTEND_URI;
     let redirectFrontEnd = `${uri}/?access_token=${access_token}&refresh_token=${refresh_token}`;
     ctx.redirect(redirectFrontEnd);
