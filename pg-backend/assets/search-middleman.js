@@ -11,7 +11,7 @@ function getFestival(userInput) {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
 
-    page.on("response", async response => {
+    page.on("response", async (response) => {
       if (response.url().includes("algolia")) {
         try {
           let search = await response.json();
@@ -29,6 +29,21 @@ function getFestival(userInput) {
   });
 }
 
+getFestival("nos alive").then((x) => {
+  let data = x[0].artists[0].facet;
+
+  const a = x[0].artists.map((x) => {
+    let data = JSON.parse(x.facet);
+    return data[1];
+  });
+
+  console.log(a[4]);
+
+  // console.log(data);
+  // let format = JSON.parse(data);
+  // console.log(format);
+});
+
 module.exports = {
-  getFestival
+  getFestival,
 };

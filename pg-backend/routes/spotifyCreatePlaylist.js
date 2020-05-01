@@ -1,6 +1,5 @@
 "use strict";
 const KoaRouter = require("koa-router");
-const webscrapping = require("../assets/artists-scrapping");
 const spotify = require("../assets/spotify-create-playlist");
 const middleman = require("../assets/search-middleman");
 
@@ -10,24 +9,25 @@ const router = new KoaRouter();
 // TODO: look up get (several tracks, artists) @ spotify api
 // TODO: upload festivalImage BASE64 to spotify playlist
 
-router.get("/createplaylist", async ctx => {
+router.get("/createplaylist", async (ctx) => {
   let { userInput, accessToken, tracksPerArtist } = ctx.request.query;
   let middlemanResults = (await middleman.getFestival(userInput))[0];
   let {
     name: festivalName,
     series: festivalURI,
-    card: festivalImage
+    card: festivalImage,
   } = middlemanResults;
 
-  let artists = await webscrapping.getArtists(
-    `https://www.festicket.com/festivals/${festivalURI}`
-  );
+  let artists = middlemanResults.artists.map((x) => {
+    let data = JSON.parse(x.facet);
+    return data[1];
+  });
 
   let playlistParams = {
     accessToken,
     tracksPerArtist: Number(tracksPerArtist),
     artists,
-    festival: festivalName
+    festival: festivalName,
   };
   let playlist = await spotify.createPlaylist(playlistParams);
   let lastBatch = await playlist[playlist.length - 1];

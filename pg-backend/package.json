@@ -4,25 +4,26 @@
   "description": "Spotify playlist generator for music festivals around the world.",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js"
+    "start": "node main.js",
+    "dev": "nodemon main.js",
+    "build:ui": "rm -rf build && cd ../pg-frontend && npm run build && cp -r dist ../pg-backend"
   },
   "author": "fbkz",
   "license": "MIT",
   "dependencies": {
     "@koa/cors": "^2.2.3",
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
     "koa-helmet": "^5.2.0",
-    "koa-router": "^8.0.8",
-    "osmosis": "^1.1.10",
+    "koa-logger": "^3.2.1",
+    "koa-static": "^5.0.0",
     "puppeteer": "^2.1.1",
     "querystring": "^0.2.0",
     "spotify-web-api-node": "^4.0.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
-    "koa-logger": "^3.2.1",
     "nodemon": "^2.0.2"
   }
 }
